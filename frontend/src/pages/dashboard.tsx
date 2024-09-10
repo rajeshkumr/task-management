@@ -9,7 +9,7 @@ interface Task {
   id: string;
   title: string;
   description: string;
-  completed: boolean;
+  status: string;
   dueDate: string;
 }
 
@@ -21,7 +21,8 @@ const Dashboard = () => {
     total: 0,
     completed: 0,
     pending: 0,
-    dueSoon: 0,
+    inProgress: 0,
+    notStarted: 0
   });
   const router = useRouter();
 
@@ -56,15 +57,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (tasks.length > 0) {
-      const completedTasks = tasks.filter(task => task.completed).length;
-      const pendingTasks = tasks.filter(task => !task.completed).length;
-      const dueSoonTasks = tasks.filter(task => new Date(task.dueDate) < new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)).length;
-
+      const completedTasks = tasks.filter(task => task.status === "completed").length;
+      const pendingTasks = tasks.filter(task => task.status === "pending").length;
+      const inProgressTasks = tasks.filter(task => task.status === "in-progress").length;
+      const noStartedTasks = tasks.filter(task => !task.status).length;
       setStats({
         total: tasks.length,
         completed: completedTasks,
         pending: pendingTasks,
-        dueSoon: dueSoonTasks,
+        inProgress: inProgressTasks,
+        notStarted: noStartedTasks
       });
     }
   }, [tasks]);
@@ -72,6 +74,8 @@ const Dashboard = () => {
   const pieData = [
     { name: 'Completed Tasks', value: stats.completed },
     { name: 'Pending Tasks', value: stats.pending },
+    { name: 'In Progress', value: stats.inProgress },
+    { name: 'No Started', value: stats.notStarted }
   ];
 
   const COLORS = ['#00C49F', '#FF8042'];
@@ -100,7 +104,8 @@ const Dashboard = () => {
             <li>Total Tasks: <span className="font-semibold">{stats.total}</span></li>
             <li>Completed Tasks: <span className="font-semibold">{stats.completed}</span></li>
             <li>Pending Tasks: <span className="font-semibold">{stats.pending}</span></li>
-            <li>Tasks Due Soon: <span className="font-semibold">{stats.dueSoon}</span></li>
+            <li>In Progress: <span className="font-semibold">{stats.inProgress}</span></li>
+            <li>No Started: <span className="font-semibold">{stats.notStarted}</span></li>
           </ul>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -134,7 +139,8 @@ const Dashboard = () => {
             data={[
               { name: 'Completed', value: stats.completed },
               { name: 'Pending', value: stats.pending },
-              { name: 'Due Soon', value: stats.dueSoon },
+              { name: 'In Progress', value: stats.inProgress },
+              { name: 'Not Started', value: stats.notStarted }
             ]}
           >
             <CartesianGrid strokeDasharray="3 3" />
