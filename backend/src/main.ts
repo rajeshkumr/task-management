@@ -29,7 +29,7 @@ async function bootstrap() {
   // Apply global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(3000);
+  await app.listen(3001);
   Logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
