@@ -54,8 +54,7 @@ Create `.env` files for both the frontend and backend.
 - **Frontend `.env`** (`/frontend/.env`):
 
 ```bash
-  NEXT_PUBLIC_HOST=http://localhost:3000
-  NEXT_PUBLIC_API_URL=http://localhost:3001
+  NEXT_PUBLIC_HOST=http://localhost:3001
 ```
 
 - **Backend `.env`** (`/frontend/.env`):
@@ -109,8 +108,7 @@ npm install
 - **Frontend `.env`** (`/frontend/.env`):
 
 ```bash
-  NEXT_PUBLIC_HOST=http://localhost:3000
-  NEXT_PUBLIC_API_URL=http://localhost:3001
+  NEXT_PUBLIC_HOST=http://localhost:3001
 ```
 
 - **Backend `.env`** (`/frontend/.env`):

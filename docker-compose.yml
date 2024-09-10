@@ -12,7 +12,7 @@ services:
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_HOST: http://localhost:3001
 
   backend:
     build:
