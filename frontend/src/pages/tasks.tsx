@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { instance } from "../lib/axios";
+import axios, { instance } from "../lib/axios";
 import Header from '../components/Header';
 import { api } from '../common/api';
 
@@ -33,8 +33,8 @@ const TasksPage = () => {
         const response = await instance().get(api.tasks);
         setTasks(response.data);
         setError(null);
-      } catch (err: any) {
-        if (err.response?.status === 401) {
+      } catch (err: unknown) {
+        if (err instanceof axios.AxiosError && err.response?.status === 401) {
           setError('Unauthorized. Please login.');
           localStorage.removeItem('token');
           router.push('/');

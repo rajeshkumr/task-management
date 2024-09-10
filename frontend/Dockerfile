@@ -1,22 +1,14 @@
-# /frontend/Dockerfile
-# Use the official Node.js image
 FROM node:18-alpine
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and install dependencies
 COPY package*.json ./
 RUN npm install --frozen-lockfile
 
-# Copy the rest of the application
-COPY . .
+ARG NEXT_PUBLIC_HOST
+ENV NEXT_PUBLIC_HOST=$NEXT_PUBLIC_HOST
 
-# Build the Next.js app
+COPY . .
 RUN npm run build
 
-# Expose port 3000 (Next.js default)
 EXPOSE 3000
-
-# Start the Next.js app
 CMD ["npm", "start"]

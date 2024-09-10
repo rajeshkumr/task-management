@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { instance } from "../lib/axios";
+import axios, { instance } from "../lib/axios";
 import Header from '../components/Header';
 import { api } from '../common/api';
 
@@ -20,7 +20,7 @@ const EditTask = () => {
         setTitle(task.title);
         setDescription(task.description);
         setDueDate(task.dueDate);
-      } catch (error: any) {
+      } catch (error: unknown) {
         setError('Failed to load task');
       }
     };
@@ -44,8 +44,8 @@ const EditTask = () => {
       });
 
       router.push('/tasks'); // Navigate to All Tasks page
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Failed to edit task');
+    } catch (error: unknown) {
+      setError(error instanceof axios.AxiosError && error.response?.data?.message || 'Failed to edit task');
     }
   };
 

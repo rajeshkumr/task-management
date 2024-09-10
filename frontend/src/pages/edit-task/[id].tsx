@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { instance } from "../../lib/axios";
+import axios, { instance } from "../../lib/axios";
 import Header from '../../components/Header';
 import { api } from '../../common/api';
 
@@ -25,7 +25,7 @@ const EditTask = () => {
           setDescription(task.description);
           setDueDate(task.dueDate.split("T")[0]);
           setStatus(task.status || 'pending'); // Handle missing status
-        } catch (error: any) {
+        } catch (error: unknown) {
           setError('Failed to load task');
         } finally {
           setLoading(false);
@@ -53,8 +53,8 @@ const EditTask = () => {
       });
 
       router.push('/tasks');
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Failed to edit task');
+    } catch (error: unknown) {
+      setError(error instanceof axios.AxiosError && error.response?.data?.message || 'Failed to edit task');
     }
   };
 

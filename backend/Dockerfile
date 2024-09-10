@@ -1,22 +1,22 @@
-# /backend/Dockerfile
-# Use the official Node.js image
 FROM node:18-alpine
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package.json and install dependencies
 COPY package*.json ./
 RUN npm install --frozen-lockfile
 
-# Copy the rest of the application
-COPY . .
+ARG DATABASE_TYPE
+ARG DATABASE_HOST
+ARG DATABASE_NAME
+ARG DATABASE_USE_UNIFIED_TOPOLOGY
+ARG DATABASE_SYNCHRONIZE
+ENV DATABASE_TYPE=$DATABASE_TYPE
+ENV DATABASE_HOST=$DATABASE_HOST
+ENV DATABASE_NAME=$DATABASE_NAME
+ENV DATABASE_USE_UNIFIED_TOPOLOGY=$DATABASE_USE_UNIFIED_TOPOLOGY
+ENV DATABASE_SYNCHRONIZE=$DATABASE_SYNCHRONIZE
 
-# Build the NestJS app
+COPY . .
 RUN npm run build
 
-# Expose port 3001 (or whatever your NestJS app is using)
 EXPOSE 3001
-
-# Start the NestJS app
 CMD ["npm", "run", "start:prod"]

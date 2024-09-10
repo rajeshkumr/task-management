@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { useRouter } from 'next/router';
-import { instance } from '../lib/axios';
+import axios, { instance } from '../lib/axios';
 import { api } from '../common/api';
 import Header from '../components/Header';
 
@@ -38,8 +38,8 @@ const Dashboard = () => {
         const response = await instance().get(api.tasks);
         setTasks(response.data);
         setError(null);
-      } catch (err: any) {
-        if (err.response?.status === 401) {
+      } catch (err: unknown) {
+        if (err instanceof axios.AxiosError && err.response?.status === 401) {
           setError('Unauthorized. Please login.');
           localStorage.removeItem('token');
           router.push('/');
