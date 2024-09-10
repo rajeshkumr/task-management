@@ -43,6 +43,53 @@ There are two ways to run the Task Management application: either by using Docke
   cd task-management
 ```
 
+### Install and setup mongodb
+
+Please refer to link to install mongo db on your local machine - <https://www.mongodb.com/docs/manual/tutorial/>
+
+**How to create tasks and users collections**
+
+- Open terminal
+- type `mongosh`. It opens the instance of mongodb to access the database and its collection
+
+**Create a database:**
+
+```bash
+use taskdb
+```
+
+**Create a collection named tasks:**
+
+```bash
+db.createCollection("tasks")
+```
+
+**Insert a dummy entry into the tasks collection:**
+
+```bash
+db.tasks.insertOne({
+  title: "Finish Project",
+  description: "Complete the task management project",
+  dueDate: new Date("2024-09-01"),
+  status: "pending"
+})
+```
+
+**Create a collection named users:**
+
+```bash
+db.createCollection("users")
+```
+
+**Insert a dummy entry into the users collection:**
+
+```bash
+db.users.insertOne({
+  username: "testuser",
+  password: "hashedpassword" // Remember to store the hashed password securely
+})
+```
+
 ## Running with Docker
 
 Follow these steps to run both frontend and backend using Docker.
