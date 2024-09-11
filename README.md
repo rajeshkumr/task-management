@@ -39,7 +39,7 @@ There are two ways to run the Task Management application: either by using Docke
 ### Clone the repository
 
 ```bash
-  git clone https://github.com/your-repo/task-management.git
+  git clone https://github.com/rajeshkumr/task-management.git
   cd task-management
 ```
 
