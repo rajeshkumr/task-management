@@ -11,12 +11,19 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: process.env.DATABASE_TYPE as 'mongodb',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: parseInt(process.env.DATABASE_PORT || '27017', 10),
+      type: 'mongodb',
+      host: process.env.DATABASE_HOST || 'cluster0.qjk8yrn.mongodb.net',
+      port: 27017, // MongoDB Atlas uses 27017 internally, but it's not needed in SRV connections
+      username: process.env.DATABASE_USERNAME || 'mailboxrajeshkr',
+      password: process.env.DATABASE_PASSWORD || '<db_password>',
       database: process.env.DATABASE_NAME || 'taskdb',
-      useUnifiedTopology: process.env.DATABASE_USE_UNIFIED_TOPOLOGY === 'true',
+      authSource: process.env.DATABASE_AUTH_SOURCE || 'admin', // Needed for authentication
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
       synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
+      ssl: true, // Required for MongoDB Atlas
+      retryWrites: true,
+      w: 'majority',
       entities: [Task, User],
     }),
     TasksModule,
