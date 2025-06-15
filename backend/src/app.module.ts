@@ -12,7 +12,7 @@ dotenv.config();
   imports: [
     TypeOrmModule.forRoot({
       url: process.env.DATABASE_URL,
-      // type: 'mongodb',
+      type: 'mongodb',
       // host: process.env.DATABASE_HOST || 'cluster0.qjk8yrn.mongodb.net',
       // port: 27017, // MongoDB Atlas uses 27017 internally, but it's not needed in SRV connections
       // username: process.env.DATABASE_USERNAME || 'mailboxrajeshkr',
